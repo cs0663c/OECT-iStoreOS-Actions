@@ -18,17 +18,9 @@ on:
         description: '请输入默认网关（静态地址时必填）'
         required: true
         default: '192.168.5.1'
-      include_docker:
-        description: "是否集成Docker插件"
-        required: true
-        default: 'yes'
-        type: choice
-        options:
-          - 'yes'
-          - 'no'
 
 env:
-  VERSION: 24.10.3
+  VERSION: 24.10.4
 
 jobs:
   build:
@@ -67,7 +59,7 @@ jobs:
 
     - name: ⏬ 下载 ImageBuilder
       run: |
-        curl -L -o imagebuilder.tar.zst https://github.com/Kwonelee/iStoreOS-Actions/releases/download/iStoreOS-ImageBuilder-20251017/istoreos-imagebuilder-armsr-armv8.Linux-x86_64.tar.zst
+        curl -L -o imagebuilder.tar.zst https://github.com/Kwonelee/iStoreOS-Actions/releases/download/iStoreOS-ImageBuilder-20251024/istoreos-imagebuilder-armsr-armv8.Linux-x86_64.tar.zst
         tar --use-compress-program=unzstd -xvf imagebuilder.tar.zst
         mv istoreos-imagebuilder-* imagebuilder
 
