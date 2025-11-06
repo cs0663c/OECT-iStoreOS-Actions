@@ -6,7 +6,7 @@ on:
       openwrt_board:
         description: "请选择设备型号"
         required: true
-        default: "a311d-oes_s905d_wxy-oect_jp-tvbox_s922x-oes-plus_fine3399_sv-33a6x_dg3399_dg-tn3568_smart-am40_smart-am60_sw799_king3399_panther-x2_firefly-rk3399_s905l3a"
+        default: "wxy-oect"
         type: choice
         options:
           - a311d-oes_s905d_wxy-oect_jp-tvbox_s922x-oes-plus_fine3399_sv-33a6x_dg3399_dg-tn3568_smart-am40_smart-am60_sw799_king3399_panther-x2_firefly-rk3399_s905l3a
@@ -172,7 +172,7 @@ on:
       openwrt_kernel:
         description: "请选择内核版本"
         required: true
-        default: "6.1.y"
+        default: "6.6.115"
         type: choice
         options:
           - 5.15.y
@@ -225,21 +225,7 @@ jobs:
           kernel_repo: ophub/kernel
           kernel_usage: stable
           builder_name: kwonelee
-
-      - name: 📜 调整.img.gz 文件名
-        id: rename
-        run: |
-          for FILE in ${{ env.PACKAGED_OUTPUTPATH }}/*.img.gz; do
-            echo "Processing file: $FILE"
-            FILENAME=$(basename "$FILE")
-            NEW_FILENAME=$(echo "$FILENAME" | sed 's/openwrt_/istoreos_${{ env.VERSION }}/g')
-            if [ "$FILENAME" != "$NEW_FILENAME" ]; then
-              mv "$FILE" "${{ env.PACKAGED_OUTPUTPATH }}/$NEW_FILENAME"
-              echo "Renamed $FILENAME to $NEW_FILENAME"
-            else
-              echo "No need to rename $FILENAME"
-            fi
-          done
+          image_name: "istoreos_${{ env.VERSION }}_{board}_{kernel}_{date}"
 
       - name: 🚀 上传到 Release
         uses: softprops/action-gh-release@v2.2.1
